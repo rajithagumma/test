@@ -330,14 +330,11 @@ else:
     print('Superuser already exists.')
 "
 docker compose up -d
-sudo rm -f /etc/profile.d/taiga-post-reboot.sh
 
 EOF
 
 chmod +x /home/ubuntu/taiga-post-reboot.sh
 
-echo "/home/ubuntu/taiga-post-reboot.sh" | sudo tee /etc/profile.d/taiga-post-reboot.sh
-chmod +x /etc/profile.d/taiga-post-reboot.sh
 
 # ------------------ INFORM USER AND REBOOT ------------------
 echo "🟡 Docker group permission will apply after reboot. Rebooting now..."
