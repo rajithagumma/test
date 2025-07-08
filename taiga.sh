@@ -330,7 +330,8 @@ else:
     print('Superuser already exists.')
 "
 docker compose up -d
-rm -f /etc/profile.d/taiga-post-reboot.sh
+sudo rm -f /etc/profile.d/taiga-post-reboot.sh
+
 EOF
 
 chmod +x /home/ubuntu/taiga-post-reboot.sh
