@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ------------------ CONFIG ------------------
-DOMAIN="testtaiga.justuju.in"
+DOMAIN="testing.justuju.in"
 EMAIL="rajitha@justuju.in"
 CERT_EMAIL="devs@justuju.in"
 EMAIL_PASS="qhygrahuvwxmsvnh"
