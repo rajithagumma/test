@@ -316,10 +316,20 @@ cat > /home/ubuntu/taiga-post-reboot.sh <<EOF
 cd /home/ubuntu/taiga-docker
 ./launch-taiga.sh
 sleep 10
-./taiga-manage.sh createsuperuser \
-  --username $ADMIN_USER \
-  --email $EMAIL \
-  --password $ADMIN_PASS
+docker compose exec taiga-back \
+  python manage.py shell -c "
+from django.contrib.auth import get_user_model
+User = get_user_model()
+username = '$ADMIN_USER'
+email = '$EMAIL'
+password = '$ADMIN_PASS'
+if not User.objects.filter(username=username).exists():
+    User.objects.create_superuser(username=username, email=email, password=password)
+    print('✅ Superuser created')
+else:
+    print('ℹ️ Superuser already exists')
+"
+
 EOF
 
 chmod +x /home/ubuntu/taiga-post-reboot.sh
