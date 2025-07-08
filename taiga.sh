@@ -314,22 +314,12 @@ sudo certbot renew --dry-run --non-interactive
 cat > /home/ubuntu/taiga-post-reboot.sh <<EOF
 #!/bin/bash
 cd /home/ubuntu/taiga-docker
-docker compose up -d
-
-sleep 15
-docker compose exec taiga-back \
-  python manage.py shell -c "
-from django.contrib.auth import get_user_model
-User = get_user_model()
-username = '$ADMIN_USER'
-email = '$EMAIL'
-password = '$ADMIN_PASS'
-if not User.objects.filter(username=username).exists():
-    user = User.objects.create_superuser(username=username, email=email, password=password)
-    print('Superuser created.')
-else:
-    print('Superuser already exists.')
-"
+./launch-taiga.sh
+sleep 10
+./taiga-manage.sh createsuperuser \
+  --username $ADMIN_USER \
+  --email $EMAIL \
+  --password $ADMIN_PASS
 EOF
 
 chmod +x /home/ubuntu/taiga-post-reboot.sh
